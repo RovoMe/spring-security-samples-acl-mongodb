@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
+       ">
+
+    <!-- MongoDB used for the ACL management -->
+
+    <bean id="mongo" class="com.mongodb.MongoClient">
+        <constructor-arg name="host" value="localhost"/>
+        <constructor-arg name="port" value="27017"/>
+    </bean>
+
+    <bean id="mongoDbFactory" class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
+        <constructor-arg name="mongoClient" ref="mongo"/>
+        <constructor-arg name="databaseName" value="spring-security-acl-test"/>
+    </bean>
+
+    <!--<mongo:mongo id="mongo" host="localhost" port="27017"/>-->
+    <!--<mongo:db-factory id="mongoDbFactory" dbname="spring-security-acl-test" mongo-ref="mongo"/>-->
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg ref="mongoDbFactory" />
+    </bean>
+
+    <!-- Handle MongoExceptions caught in @Repository annotated classes -->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+    <context:annotation-config />
+    <context:component-scan base-package="org.springframework.security.acls" />
+
+    <!-- The Spring-Data-MongoDB Acl repository -->
+    <mongo:repositories base-package="org.springframework.security.acls.dao"/>
+</beans>
