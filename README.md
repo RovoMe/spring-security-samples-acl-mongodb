@@ -8,7 +8,7 @@ Modifications on the original code where mainly on the introduction of an own `a
 
 In order to run the sample, make sure you have check out [spring-security-acl-mongodb](https://github.com/RovoMe/spring-security-acl-mongodb) and installed its artifacts to your local Maven `.m2/repository` repository. Make sure a Gradle 3.5, MySQL 5.1.6+ and MongoDB 3.x are available on your system and both MySQL and MongoDB are up and running. MySQL should listen on port 3306 while MongoDB on port 27017.
 
-Afterwards change to the `samples/xml/contacts` directory and enter `gradle tomcatStart` into your terminal. Soon an output similar to 
+Afterwards change to the `samples/xml/contacts` directory and enter `gradle tomcatRun` into your terminal. Soon an output similar to 
 
 ```
 Started Tomcat Server
